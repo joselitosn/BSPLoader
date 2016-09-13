@@ -2,7 +2,7 @@ from collections import UserDict, UserList
 from struct import unpack
 
 
-class GoldSrc(object):
+class GoldSrcBSP(object):
     version = 30
     LUMPS = (
         'ENTITIES', 'PLANES', 'TEXTURES', 'VERTICES', 'VISIBILITY', 'NODES', 'TEXINFO', 'FACES', 'LIGHTING',
@@ -21,16 +21,16 @@ class GoldSrc(object):
 
     class BSPLumps(UserDict):
         def __init__(self, file):
-            super(GoldSrc.BSPLumps, self).__init__()
+            super(GoldSrcBSP.BSPLumps, self).__init__()
 
             file.seek(4)
-            for i in range(len(GoldSrc.LUMPS)):
+            for i in range(len(GoldSrcBSP.LUMPS)):
                 lump = unpack('=ii', file.read(8))
-                self.data[GoldSrc.LUMPS[i]] = {'OFFSET': lump[0], 'SIZE': lump[1]}
+                self.data[GoldSrcBSP.LUMPS[i]] = {'OFFSET': lump[0], 'SIZE': lump[1]}
 
     class BSPEntities(UserDict):
         def __init__(self, data):
-            super(GoldSrc.BSPEntities, self).__init__()
+            super(GoldSrcBSP.BSPEntities, self).__init__()
             self.parse_entities(data)
 
         def parse_entities(self, data):
@@ -73,7 +73,7 @@ class GoldSrc(object):
 
     class BSPTextures(UserList):
         def __init__(self, data):
-            super(GoldSrc.BSPTextures, self).__init__()
+            super(GoldSrcBSP.BSPTextures, self).__init__()
             self.textures = []
             self.size = unpack('=I', data[0:4])[0]
             textures_offsets = self.get_textures_offsets(data)
@@ -89,5 +89,4 @@ class GoldSrc(object):
 
         def get_textures_mipmaps(self, data, offsets):
             for i in range(self.size):
-                texture_name = unpack('=16s', data[offsets[i]:offsets[i] + 16])[0].rstrip()
-                # print(texture_name)
+                texture_name = unpack('=16s', data[offsets[i]:offsets[i] + 16])[0].split(b'\x00')[0]

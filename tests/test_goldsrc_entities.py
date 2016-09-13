@@ -1,16 +1,16 @@
 import unittest
-from bspfile import BSPFile
+from bsploader import BSP
 
 
-class GoldSrcEntityTest(unittest.TestCase):
+class GoldSrcBSPEntityTest(unittest.TestCase):
     def setUp(self):
-        self.bsp = BSPFile('fy_new_pool_day.bsp')
+        self.bsp = BSP('aim_galil-famas.bsp')
 
     def test_entities_player_ct(self):
-        self.assertEqual(len(self.bsp.entities.get('info_player_start')), 16, 'Incorrect number of CTs spawns.')
+        self.assertEqual(len(self.bsp.entities.get('info_player_start')), 18, 'Incorrect number of CTs spawns.')
 
     def test_entities_player_t(self):
-        self.assertEqual(len(self.bsp.entities.get('info_player_deathmatch')), 16, 'Incorrect number of Ts spawns.')
+        self.assertEqual(len(self.bsp.entities.get('info_player_deathmatch')), 18, 'Incorrect number of Ts spawns.')
 
 
 if __name__ == '__main__':
