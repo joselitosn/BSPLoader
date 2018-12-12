@@ -4,7 +4,7 @@ from bsploader import BSP
 
 class GoldSrcBSPEntityTest(unittest.TestCase):
     def setUp(self):
-        self.bsp = BSP('aim_galil-famas.bsp')
+        self.bsp = BSP('aim_galil-famas.goldsrc')
 
     def test_entities_player_ct(self):
         self.assertEqual(len(self.bsp.entities.get('info_player_start')), 18, 'Incorrect number of CTs spawns.')
